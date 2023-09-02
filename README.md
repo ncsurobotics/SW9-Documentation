@@ -1,6 +1,6 @@
 # SW9-Documentation
 
-Documentation for SeaWolf VX
+Documentation for SeaWolf IX
 
 
 ## Required Tools
