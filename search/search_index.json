@@ -1,0 +1,1 @@
+{"config":{"lang":["en"],"separator":"[\\s\\-]+","pipeline":["stopWordFilter"]},"docs":[{"location":"","title":"SeaWolf IX Documentation","text":"<p>Documentation for AquaPack Robotics' SeaWolf IX.</p> <p>SeaWolf IX is designed to compete in the RoboSub competition each year. SeaWolf IX is AquaPack Robotic's 9th robot.</p>"}]}

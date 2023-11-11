@@ -1,0 +1,63 @@
+title: SeaWolf IX Power Architecture {
+  near: top-center
+  shape: text
+  style: {
+    font-size: 29
+    bold: true
+  }
+}
+
+power: Power {
+  battery: 4S LiPo
+  domains: Domains {
+    twelve: 12V
+    five: 5V
+    three: 3.3V
+  }
+}
+
+locomotion: Motors {
+  esc: ESCs
+  thrusters: Thrusters
+}
+
+ex: Expansion Boards {
+  msys: Mechanical Systems Board
+  ac: Acoustics
+}
+
+orin: Jetson Orin Nano {
+  ctrl: Control Board
+  cam: Cameras
+}
+
+backplane: Backplane {
+  i2c: I2C
+  lights: LEDs
+}
+
+acModem: Acoustics Modem
+dvl: DVL
+sonar: Active Sonar
+usb: USB Hub
+
+power.battery -> locomotion.esc
+locomotion.esc -> locomotion.thrusters
+
+power.battery -> power.domains.twelve
+power.battery -> power.domains.five
+power.battery -> power.domains.three
+
+power.domains.twelve -> orin
+power.domains.twelve -> ex
+power.domains.twelve -> backplane.lights
+power.domains.twelve -> acModem
+power.domains.twelve -> dvl
+power.domains.twelve -> sonar
+
+power.domains.five -> ex
+power.domains.five -> usb
+
+power.domains.three -> ex
+power.domains.three -> backplane.i2c
+
