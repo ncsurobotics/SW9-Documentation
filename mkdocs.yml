@@ -32,5 +32,7 @@ extra:
   generator: false
 copyright: AquaPack Robotics &copy; 2023 Released under <a id="footer-link" href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>
 nav:
-  - Home: index.md
+  - Home: index.mdl
+  - Electrical:
+      - Microcontroller Architecture: electrical/microcontroller-architecture.md
   - ⮤ Return to general documentation: https://ncsurobotics.github.io/
