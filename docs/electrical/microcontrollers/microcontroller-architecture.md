@@ -48,3 +48,19 @@ supported, its wide selections, and its low cost.
     </tr>
 </table>
 
+## MCU Frontrunner
+### [STM32L051C6T6](https://estore.st.com/en/stm32l051c6t6-cpn.html)
+- ARM Cortex M0+
+- 32KB Flash Memory
+- 32 MHz
+- Up to 51 GPIO pins
+- 88 micro Amp/MHz in run mode
+- 2 I2C Busses
+- 1 UART
+- [Guaranteed support until 2033](https://www.st.com/content/st_com/en/about/quality-and-reliability/product-longevity.html#10-year-longevity)
+
+
+
+
+
+
