@@ -12,7 +12,18 @@ The STM32 family of microcontrollers has been identified as a
 strong candidate for this application due to it being very well
 supported, its wide selections, and its low cost.
 
-## MCU Candidates
+## MCU Choice
+### [STM32L051C6T6](https://estore.st.com/en/stm32l051c6t6-cpn.html)
+- ARM Cortex M0+
+- 32KB Flash Memory
+- 32 MHz
+- Up to 51 GPIO pins
+- 88 micro Amp/MHz in run mode
+- 2 I2C Busses
+- 1 UART
+- [Guaranteed support until 2033](https://www.st.com/content/st_com/en/about/quality-and-reliability/product-longevity.html#10-year-longevity)
+- 
+## Other Similar MCUs
 <table>
     <tr>
         <th>Microcontroller</th>
@@ -48,16 +59,18 @@ supported, its wide selections, and its low cost.
     </tr>
 </table>
 
-## MCU Frontrunner
-### [STM32L051C6T6](https://estore.st.com/en/stm32l051c6t6-cpn.html)
-- ARM Cortex M0+
-- 32KB Flash Memory
-- 32 MHz
-- Up to 51 GPIO pins
-- 88 micro Amp/MHz in run mode
-- 2 I2C Busses
-- 1 UART
-- [Guaranteed support until 2033](https://www.st.com/content/st_com/en/about/quality-and-reliability/product-longevity.html#10-year-longevity)
+
+
+## MCU Board Schematic
+![MCU Board Schematic](SW9-MCU_BOARD_SCHEMATIC.png)
+
+## MCU Board Specifications
+**Four Planes:**
+1. Top Plane (most components located here)
+2. Ground Plane
+3. Power VDD Plane
+4. Bottom Plane
+
 
 
 
