@@ -62,7 +62,7 @@ supported, its wide selections, and its low cost.
 
 
 ## MCU Board Schematic
-![MCU Board Schematic](SW9-MCU_BOARD_SCHEMATIC.png)
+![MCU Board Schematic](SW9-MCU_BOARD_SCHEMATIC.png){: .center}
 
 ## MCU Board Specifications
 **Four Planes:**
