@@ -1,0 +1,88 @@
+title: SeaWolf IX Power Architecture {
+  near: top-left
+  shape: text
+  style: {
+    font-size: 29
+    bold: true
+  }
+}
+
+battery: 4S LiPo
+
+test: Under Test Conditions {
+  tether: Ethernet Tether
+  surface: Surface
+}
+
+locomotion: Motors {
+  esc: ESC (x6)
+  thrusters: Thruster (T200 x5, T500 x1)
+}
+
+ex: Expansion Boards {
+  msys: Mechanical Systems Board
+  ac: Acoustics
+}
+
+backplane: Backplane {
+  i2c: I2C
+  lights: LEDs
+
+  regulators: Regulators {
+    twelve: 12V
+    five: 5V
+    three: 3V3
+  }
+}
+
+sensors: Sensors {
+  modem: Acoustics Modem
+  dvl: DVL
+  sonar: Active Sonar
+  cam: Cameras
+  leak: Leak Sensors
+  hydro: Hydrophones
+}
+
+switching: Switching {
+    sys: System Power
+    hw: Hardware Kill
+}
+
+orin: Jetson Orin Nano
+usb: USB Hub
+ctrl: Control Board
+
+battery -> switching.sys
+
+switching.sys -> backplane.regulators.twelve
+switching.sys -> locomotion.esc
+locomotion.esc -> locomotion.thrusters
+locomotion.thrusters <- switching.hw
+
+backplane.regulators.twelve -> backplane.regulators.five
+backplane.regulators.twelve -> backplane.regulators.three
+backplane.regulators.twelve -> orin
+backplane.regulators.twelve -> ex
+backplane.regulators.twelve -> backplane.lights
+backplane.regulators.twelve -> sensors.modem
+backplane.regulators.twelve -> sensors.dvl
+backplane.regulators.twelve -> sensors.sonar
+
+backplane.regulators.five -> ex
+backplane.regulators.five -> usb
+
+backplane.regulators.three -> ex
+backplane.regulators.three -> backplane.i2c
+
+backplane.i2c <-> ex
+backplane.i2c -> sensors.leak
+
+usb <-> orin
+usb <-> sensors.cam
+usb <-> ctrl
+
+sensors.hydro -> ex.ac
+
+test.surface <-> test.tether
+test.tether <-> orin
