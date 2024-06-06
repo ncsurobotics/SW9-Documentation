@@ -1,4 +1,4 @@
-title: SeaWolf IX Power Architecture {
+title: SeaWolf IX System Architecture {
   near: top-left
   shape: text
   style: {
@@ -17,10 +17,11 @@ test: Under Test Conditions {
 locomotion: Motors {
   esc: ESC (x6)
   thrusters: Thruster (T200 x5, T500 x1)
+  ctrl: Control Board
 }
 
 ex: Expansion Boards {
-  msys: Mechanical Systems Board
+  msys: Manipulation Systems Board
   ac: Acoustics
 }
 
@@ -46,23 +47,36 @@ sensors: Sensors {
 
 switching: Switching {
     sys: System Power
-    hw: Hardware Kill
+    swkill: Software Kill
+    hwkill: Hardware Kill
 }
 
-orin: Jetson Orin Nano
-usb: USB Hub
-ctrl: Control Board
+computer: Computer {
+    orin: Jetson Orin Nano
+    usb: USB Hub
+}
+
+manipulators: Manipulators {
+    dropper: Dropper
+    torpedo: Torpedo
+    grabber: Grabber
+}
+
+ex.msys -> manipulators.dropper
+ex.msys -> manipulators.torpedo
+ex.msys -> manipulators.grabber
 
 battery -> switching.sys
 
 switching.sys -> backplane.regulators.twelve
 switching.sys -> locomotion.esc
+switching.swkill -> switching.hwkill
 locomotion.esc -> locomotion.thrusters
-locomotion.thrusters <- switching.hw
+locomotion.thrusters <- switching.hwkill
 
 backplane.regulators.twelve -> backplane.regulators.five
 backplane.regulators.twelve -> backplane.regulators.three
-backplane.regulators.twelve -> orin
+backplane.regulators.twelve -> computer.orin
 backplane.regulators.twelve -> ex
 backplane.regulators.twelve -> backplane.lights
 backplane.regulators.twelve -> sensors.modem
@@ -70,7 +84,7 @@ backplane.regulators.twelve -> sensors.dvl
 backplane.regulators.twelve -> sensors.sonar
 
 backplane.regulators.five -> ex
-backplane.regulators.five -> usb
+backplane.regulators.five -> computer.usb
 
 backplane.regulators.three -> ex
 backplane.regulators.three -> backplane.i2c
@@ -78,11 +92,15 @@ backplane.regulators.three -> backplane.i2c
 backplane.i2c <-> ex
 backplane.i2c -> sensors.leak
 
-usb <-> orin
-usb <-> sensors.cam
-usb <-> ctrl
+computer.usb <-> computer.orin
+computer.usb <-> sensors.cam
+computer.usb <-> locomotion.ctrl
+
+computer.orin -> switching.swkill
+
+locomotion.ctrl -> locomotion.esc
 
 sensors.hydro -> ex.ac
 
 test.surface <-> test.tether
-test.tether <-> orin
+test.tether <-> computer.orin
