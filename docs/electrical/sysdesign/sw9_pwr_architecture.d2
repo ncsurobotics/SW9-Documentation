@@ -1,3 +1,10 @@
+classes: {
+  RED: {style.stroke: "#c00"}
+  GREEN: {style.stroke: "#0c0"}
+  BLUE: {style.stroke: "#00c"}
+
+}
+
 title: SeaWolf IX Power Architecture {
   near: top-center
   shape: text
@@ -10,7 +17,8 @@ title: SeaWolf IX Power Architecture {
 power: Power {
   battery: 4S LiPo
   domains: Domains {
-    twelve: 12V
+    twelve: 12V SEPIC (24W)
+    intermediate: Intermediate 12V Buck/Boost (48W)
     five: 5V
     three: 3.3V
   }
@@ -21,43 +29,51 @@ locomotion: Motors {
   thrusters: Thrusters
 }
 
-ex: Expansion Boards {
-  msys: Mechanical Systems Board
-  ac: Acoustics
+orin: Jetson Orin Nano (15W) {
+  ctrl: Control Board (2.5W)
 }
 
-orin: Jetson Orin Nano {
-  ctrl: Control Board
-  cam: Cameras
+usb: USB Hub (12.5W) {
+  cam1: Camera 1 (2.5W)
+  cam2: Camera 2 (2.5W)
+  unused1: Unused Slot
+  unused2: Unused Slot
 }
 
-backplane: Backplane {
+
+backplane: Backplane (15W expected) {
   i2c: I2C
-  lights: LEDs
+  lights: LEDs (9W/30LEDs)
+  ex: Expansion Boards (4W) {
+    msys: Mechanical Systems Board
+    ac: Acoustics
+    extra1: Unused Slot
+    extra2: Unused Slot
+  }
 }
 
-acModem: Acoustics Modem
-dvl: DVL
-sonar: Active Sonar
-usb: USB Hub
+acModem: Acoustics Modem (4W avg, 10W peak)
+dvl: DVL (3W avg)
+sonar: Active Sonar (5W)
 
 power.battery -> locomotion.esc
 locomotion.esc -> locomotion.thrusters
 
 power.battery -> power.domains.twelve
-power.battery -> power.domains.five
-power.battery -> power.domains.three
+power.battery -> power.domains.intermediate
+power.domains.intermediate -> power.domains.five {class: RED}
+power.domains.intermediate -> power.domains.three {class: RED}
 
-power.domains.twelve -> orin
-power.domains.twelve -> ex
-power.domains.twelve -> backplane.lights
-power.domains.twelve -> acModem
-power.domains.twelve -> dvl
-power.domains.twelve -> sonar
+power.domains.twelve -> orin {class: RED}
+power.domains.intermediate -> backplane.ex {class: RED}
+power.domains.intermediate -> backplane.lights {class: RED}
+power.domains.intermediate -> acModem {class: RED}
+power.domains.intermediate -> dvl {class: RED}
+power.domains.intermediate -> sonar {class: RED}
 
-power.domains.five -> ex
-power.domains.five -> usb
+power.domains.five -> backplane.ex {class: BLUE}
+power.domains.five -> usb {class: BLUE}
 
-power.domains.three -> ex
-power.domains.three -> backplane.i2c
+power.domains.three -> backplane.ex {class: GREEN}
+power.domains.three -> backplane.i2c {class: GREEN}
 

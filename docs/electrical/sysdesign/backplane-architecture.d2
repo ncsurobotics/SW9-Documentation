@@ -1,0 +1,74 @@
+classes: {
+  PWR_12V: {style.stroke: "#c00"}
+  PWR_5V: {style.stroke: "#c00"}
+  PWR_3V3: {style.stroke: "#c00"}
+  I2C
+}
+
+title: SeaWolf IX Backplane Architecture {
+  near: top-center
+  shape: text
+  style: {
+    font-size: 29
+    bold: true
+  }
+}
+
+
+battery: |`
+  # System Battery
+  - 4S LiPo
+  - Nominal 14.8V
+  - Range 12.8-16.8V
+`|
+
+backplane: PCB {
+  regulators: Power Regulation {
+    regJetson: 12V Regulator (Jetson) {
+      description: |`
+        - SEPIC topology
+      `|
+    }
+    reg12v: 12V Regulator {
+      description: |`
+        - Buck/Boost Topology
+      `|
+    }
+    reg5v: 5V Regulator {
+      description: |`
+        - Buck/Boost topology
+      `|
+    }
+    reg3v3: 3V3 Regulator {
+      description: |`
+        - Buck/Boost topology
+      `|
+    }
+  }
+  ex: Expansion Boards{
+    layer1: Layer 1
+    layer2: Layer 2
+    layer3: Layer 3
+    layer4: Layer 4
+  }
+}
+
+msb: Manipulation Systems Board
+acoustics: Acoustics System
+
+jetson: Jetson Orin Nano
+
+battery -> backplane.regulators.reg12v
+battery -> backplane.regulators.regJetson -> jetson
+
+backplane.regulators.reg12v -> backplane.ex
+backplane.regulators.reg12v -> backplane.regulators.reg5v
+backplane.regulators.reg12v -> backplane.regulators.reg3v3
+
+backplane.regulators.reg5v -> backplane.ex
+backplane.regulators.reg3v3 -> backplane.ex
+
+backplane.ex.layer1 -> msb: 12V {class: PWR_12V}
+backplane.ex.layer1 -> msb: 5V  {class: PWR_5V}
+backplane.ex.layer1 -> msb: 3V3 {class: PWR_3V3}
+backplane.ex.layer1 -> msb: I2C
